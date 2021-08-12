@@ -1,0 +1,48 @@
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Productos</mat-label>
+    <mat-select [(value)]="selectedProduct">
+      <mat-option *ngFor="let product of products" [value]="product">{{product.name}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Horas de alquiler</mat-label>
+    <input [(ngModel)]="hours" type="number" min="1" matInput>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Dias de alquiler</mat-label>
+    <input [(ngModel)]="days" type="number" min="1"  matInput>
+  </mat-form-field>
+</p>
+<p>
+  <mat-form-field appearance="fill">
+    <mat-label>Cantidad de Productos</mat-label>
+    <input [(ngModel)]="quantity" type="quantity" matInput>
+  </mat-form-field>
+</p>
+<p>
+  <button mat-raised-button color="primary" (click)="calcular()">Calcular</button>
+</p>
+<div *ngIf="rentResult != null">
+  <mat-card *ngIf="rentResult.discounts.length > 0">
+    Precio Inicial {{ rentResult.totalPrice | currency:'ARS' }}
+  </mat-card>
+
+  <div *ngIf="rentResult.discounts.length === 0" class="alert alert-info">No hay descuentos</div>
+
+  <ul *ngIf="rentResult.discounts.length > 0" class="list-group">
+
+    Descuentos:
+    <mat-card *ngFor="let discount of rentResult.discounts">
+      <h4>{{discount.description}} | Porcentaje {{discount.percentage}}% </h4> 
+    </mat-card>
+    <br>
+  </ul>
+  <mat-card>
+    <strong>Precio Final</strong> {{ rentResult.finalPrice | currency:'ARS' }}
+  </mat-card>
+</div>
